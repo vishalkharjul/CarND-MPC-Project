@@ -67,11 +67,12 @@ Self-Driving Car Engineer Nanodegree Program
 
 The kinematic model includes the vehicle's x and y coordinates, orientation angle (psi), and velocity, as well as the cross-track error and psi error (epsi). Actuator outputs are acceleration and delta (steering angle). The model combines the state and actuations from the previous timestep to calculate the state for the current timestep based on the equations below:
 
-equations
+![equations](mpc.png)
+
 
 ###  Timestep Length and Elapsed Duration (N & dt): Student discusses the reasoning behind the chosen N (timestep length) and dt (elapsed duration between timesteps) values. Additionally the student details the previous values tried.
 
-The values chosen for N and dt are 7 and 0.05, respectively. This values suggests that the optimizer is considering less than one-second duration around 0.35 second to determine a corrective trajectory. I also experimented with Other values like  10 / 0.01, 10 / 0.05. I was able to stabilise car with 10/0.01 but it failed when car speed increased from 70 to 80 and above. With  10 / 0.05, I observed Car was not stable and kept moving around trajectory. Finally, I finalised value of 7/0.05 which works well even on speed of 80 without much unstablity. 
+The values chosen for N and dt are 8 and 0.05, respectively. This values suggests that the optimizer is considering less than one-second duration around 0.35 second to determine a corrective trajectory. I also experimented with Other values like  10 / 0.01, 10 / 0.05. I was able to stabilise car with 10/0.01 but it failed when car speed increased from 70 to 80 and above. With  10 / 0.05, I observed car was not stable and kept moving around reference trajectory. Finally, I used value of 8/0.05 which works well even on speed of 80 without much unstablity. 
 
 ###  Polynomial Fitting and MPC Preprocessing: A polynomial is fitted to waypoints. If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.
 
@@ -79,5 +80,4 @@ The waypoints are preprocessed by transforming them to the vehicle's perspective
 
 ###  Model Predictive Control with Latency: The student implements Model Predictive Control that handles a 100 millisecond latency. Student provides details on how they deal with latency.
 
-I followed approch suggested in Q and A video of project (see main.cpp lines 108-111). I predicted current position of car post latency using kinematic model equations and used it to transform waypoints and also passed it to solver as current state.  I modified cost function slightly by adding term of multiplication of steering angle and velocity. Idea is to reduce velocity of car when it is sharp turn. 
-I referred articles written by fellow student and found it suyggesed by one of the student. I tried it in my model and with tunning of parameters, it worked well.     
+I followed approch suggested in Q and A video of project (see main.cpp lines 108-111). I predicted current position of car post latency using kinematic model equations and used it to transform waypoints and also passed it to solver as current state.  I modified cost function slightly by adding term of multiplication of steering angle and velocity. Idea is to reduce velocity of car when it is sharp turn.  I referred articles written by fellow students. This approch was recommened by one of the student. I tried it in my model and with recursive tunning of parameters, car is now able to complete track.     
