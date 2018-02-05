@@ -81,3 +81,5 @@ The waypoints are preprocessed by transforming them to the vehicle's perspective
 ###  Model Predictive Control with Latency: The student implements Model Predictive Control that handles a 100 millisecond latency. Student provides details on how they deal with latency.
 
 I followed approch suggested in Q and A video of project (see main.cpp lines 108-111). I predicted current position of car post latency using kinematic model equations and used it to transform waypoints and also passed it to solver as current state.  I modified cost function slightly by adding term of multiplication of steering angle and velocity. Idea is to reduce velocity of car when it is sharp turn.  I referred articles written by fellow students. This approch was recommened by one of the student. I tried it in my model and with recursive tunning of parameters, car is now able to complete track.     
+
+### Final project Video : https://youtu.be/zI-U7kI9nAc
